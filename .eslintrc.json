@@ -8,6 +8,7 @@
     "standard",
     "standard-with-typescript"
   ],
+  "ignorePatterns": ["**.js"],
   "overrides": [
   ],
   "parserOptions": {

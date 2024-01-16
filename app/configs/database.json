@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "root",
+    "database": "db_inventory_app_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "url": "postgresql://postgres:lfp6rmfC4dvrFCny4eI9@containers-us-west-27.railway.app:5869/railway",
+    "username": "postgres",
+    "password": "lfp6rmfC4dvrFCny4eI9",
+    "database": "railway",
+    "host": "postgres://@containers-us-west-27.railway.app:5869/",
+    "dialect": "postgres"
+  },
+  "production": {
+    "url": "postgresql://postgres:lfp6rmfC4dvrFCny4eI9@containers-us-west-27.railway.app:5869/railway",
+    "username": "postgres",
+    "password": "lfp6rmfC4dvrFCny4eI9",
+    "database": "railway",
+    "host": "postgres://@containers-us-west-27.railway.app:5869/",
+    "dialect": "postgres"
+  }
+}
