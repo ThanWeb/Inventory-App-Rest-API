@@ -1,6 +1,8 @@
 const express = require('express')
-const router = express.Router()
 const { Request, Response, NextFunction } = require('express')
+const { addProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
+
+const router = express.Router()
 
 router.get('/', (req: typeof Request, res: typeof Response, next: typeof NextFunction) => {
   res.status(200).json({
@@ -9,6 +11,10 @@ router.get('/', (req: typeof Request, res: typeof Response, next: typeof NextFun
   })
 })
 
-export {}
+router.post('/product', addProduct)
+router.get('/product', getAllProduct)
+router.put('/product', updateProduct)
+router.delete('/product', deleteProduct)
 
+export {}
 module.exports = router
