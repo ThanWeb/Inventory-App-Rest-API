@@ -9,16 +9,17 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
 
     if (isExist !== null) {
       return res.status(400).json({
-        error: false,
+        error: true,
         message: 'Product With Same Name Already Exist'
       })
     }
 
-    await Product.create({ name, capitalPrice, sellPrice, stock, unit, isDeleted: false })
+    const product = await Product.create({ name, capitalPrice, sellPrice, stock, unit, isDeleted: false })
 
     return res.status(201).json({
       error: false,
-      message: 'Product Added'
+      message: 'Product Added',
+      product
     })
   } catch (error) {
     console.error(error)
@@ -58,7 +59,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
 
     if (isExist === null) {
       return res.status(404).json({
-        error: false,
+        error: true,
         message: 'Product Not Found'
       })
     }
@@ -86,7 +87,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
 
     if (isExist === null) {
       return res.status(404).json({
-        error: false,
+        error: true,
         message: 'Product Not Found'
       })
     }
