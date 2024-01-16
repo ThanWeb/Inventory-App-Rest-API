@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     capitalPrice: { type: DataTypes.INTEGER, allowNull: false },
     sellPrice: { type: DataTypes.INTEGER, allowNull: false },
     stock: { type: DataTypes.INTEGER, allowNull: false },
-    unit: { type: DataTypes.STRING, allowNull: false }
+    unit: { type: DataTypes.STRING, allowNull: false },
+    isDeleted: { type: DataTypes.BOOLEAN, allowNull: false },
   }, {
     sequelize,
     modelName: 'Product',

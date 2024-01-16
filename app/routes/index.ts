@@ -14,7 +14,7 @@ router.get('/', (req: typeof Request, res: typeof Response, next: typeof NextFun
 router.post('/product', addProduct)
 router.get('/product', getAllProduct)
 router.put('/product', updateProduct)
-router.delete('/product', deleteProduct)
+router.put('/product/delete', deleteProduct)
 
 export {}
 module.exports = router
