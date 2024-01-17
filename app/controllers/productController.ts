@@ -56,11 +56,19 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
     const { id, name, capitalPrice, sellPrice, stock, unit }: { id: number, name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string } = req.body
 
     const isExist = await checkProductExistById(id)
+    const sameName = await checkProductExistByName(name)
 
     if (isExist === null) {
       return res.status(404).json({
         error: true,
         message: 'Product Not Found'
+      })
+    }
+
+    if (sameName !== null) {
+      return res.status(400).json({
+        error: true,
+        message: 'Product With Same Name Already Exist'
       })
     }
 
@@ -85,7 +93,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
 
     const isExist = await checkProductExistById(id)
 
-    if (isExist === null) {
+    if (isExist === null || isExist.isDeleted === true) {
       return res.status(404).json({
         error: true,
         message: 'Product Not Found'
