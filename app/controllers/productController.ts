@@ -66,10 +66,12 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
     }
 
     if (sameName !== null) {
-      return res.status(400).json({
-        error: true,
-        message: 'Product With Same Name Already Exist'
-      })
+      if (sameName.id !== id) {
+        return res.status(400).json({
+          error: true,
+          message: 'Product With Same Name Already Exist'
+        })
+      }
     }
 
     await Product.update({ name, capitalPrice, sellPrice, stock, unit }, { where: { id } })
