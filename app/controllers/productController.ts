@@ -3,9 +3,10 @@ const { Product } = require('../models')
 
 async function addProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
+    const userId: number = req.id
     const { name, capitalPrice, sellPrice, stock, unit }: { name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string } = req.body
 
-    const isExist = await checkProductExistByName(name)
+    const isExist = await checkProductExistByName(name, userId)
 
     if (isExist !== null) {
       return res.status(400).json({
@@ -14,7 +15,7 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
       })
     }
 
-    const product = await Product.create({ name, capitalPrice, sellPrice, stock, unit, isDeleted: false })
+    const product = await Product.create({ userId: req.id, name, capitalPrice, sellPrice, stock, unit, isDeleted: false })
 
     return res.status(201).json({
       error: false,
@@ -34,7 +35,8 @@ async function getAllProduct (req: typeof Request, res: typeof Response): Promis
   try {
     const products = await Product.findAll({
       where: {
-        isDeleted: false
+        isDeleted: false,
+        userId: req.id
       }
     })
 
@@ -53,10 +55,11 @@ async function getAllProduct (req: typeof Request, res: typeof Response): Promis
 
 async function updateProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
+    const userId: number = req.id
     const { id, name, capitalPrice, sellPrice, stock, unit }: { id: number, name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string } = req.body
 
-    const isExist = await checkProductExistById(id)
-    const sameName = await checkProductExistByName(name)
+    const isExist = await checkProductExistById(id, userId)
+    const sameName = await checkProductExistByName(name, userId)
 
     if (isExist === null) {
       return res.status(404).json({
@@ -74,7 +77,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       }
     }
 
-    await Product.update({ name, capitalPrice, sellPrice, stock, unit }, { where: { id } })
+    await Product.update({ name, capitalPrice, sellPrice, stock, unit }, { where: { id, userId: req.id } })
 
     return res.status(200).json({
       error: false,
@@ -91,9 +94,10 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
 
 async function deleteProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
+    const userId: number = req.id
     const { id }: { id: number } = req.body
 
-    const isExist = await checkProductExistById(id)
+    const isExist = await checkProductExistById(id, userId)
 
     if (isExist === null || isExist.isDeleted === true) {
       return res.status(404).json({
@@ -117,17 +121,17 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
   }
 }
 
-async function checkProductExistByName (name: string): Promise<Record<string, any> | null> {
+async function checkProductExistByName (name: string, userId: number): Promise<Record<string, any> | null> {
   const product = await Product.findOne({
-    where: { name, isDeleted: false }
+    where: { name, isDeleted: false, userId }
   })
 
   return product
 }
 
-async function checkProductExistById (id: number): Promise<Record<string, any> | null> {
+async function checkProductExistById (id: number, userId: number): Promise<Record<string, any> | null> {
   const product = await Product.findOne({
-    where: { id }
+    where: { id, userId }
   })
 
   return product
