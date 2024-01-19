@@ -24,13 +24,14 @@ const verifyToken = (req: typeof Request, res: typeof Response, next: typeof Nex
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error: Error, decoded: any) => {
     if (error !== null) {
       res.cookie('refreshToken', '')
+
       return res.status(401).json({
         error: true,
         message: 'Sesi Login Expired, Silahkan Login Ulang'
       })
     }
 
-    req.email = decoded.email
+    req.username = decoded.username
     req.id = decoded.id
     next()
   })

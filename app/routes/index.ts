@@ -1,5 +1,6 @@
 const express = require('express')
 const { Request, Response, NextFunction } = require('express')
+const { register, login, verifyAccessToken, logout } = require('../controllers/userController')
 const { addProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
 const verifyToken = require('../middlewares/verifyToken')
 
@@ -11,6 +12,11 @@ router.get('/', (req: typeof Request, res: typeof Response, next: typeof NextFun
     message: 'Welcome'
   })
 })
+
+router.post('/register', register)
+router.post('/login', login)
+router.post('/verify', verifyToken, verifyAccessToken)
+router.delete('/logout', logout)
 
 router.post('/product', verifyToken, addProduct)
 router.get('/product', verifyToken, getAllProduct)
