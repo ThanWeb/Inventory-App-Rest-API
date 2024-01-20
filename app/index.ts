@@ -9,17 +9,21 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT ?? 8000
 
+app.use(express.json())
+
 const corsOptions = {
-  origin: [process.env.CLIENT_URL ?? ''],
-  credentials: true
+  origin: process.env.CLIENT_URL ?? '',
+  credentials: true,
+  optionSuccessStatus: 200
 }
 
 app.use(cors(corsOptions))
-app.use(express.json())
-app.use('/', router)
 app.use(cookieParser())
+app.set('trust proxy', true)
 
 app.listen(port, () => {
   console.log(`\nApp Running on http://localhost:${port}`)
   console.log('Press Ctrl-C to terminate\n')
 })
+
+app.use('/', router)

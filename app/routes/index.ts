@@ -15,7 +15,7 @@ router.get('/', (req: typeof Request, res: typeof Response, next: typeof NextFun
 
 router.post('/register', register)
 router.post('/login', login)
-router.post('/verify', verifyToken, verifyAccessToken)
+router.get('/verify', verifyToken, verifyAccessToken)
 router.delete('/logout', logout)
 
 router.post('/product', verifyToken, addProduct)

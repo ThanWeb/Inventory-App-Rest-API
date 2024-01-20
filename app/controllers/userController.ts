@@ -80,7 +80,7 @@ async function login (req: typeof Request, res: typeof Response): Promise<any> {
       } else {
         const { username, id } = user
         const accessToken = jwt.sign({ id, username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
-        refreshToken = jwt.sign({ id, username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30 days' })
+        refreshToken = jwt.sign({ id, username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' })
 
         await User.update({ refreshToken }, {
           where: { id }
@@ -88,7 +88,7 @@ async function login (req: typeof Request, res: typeof Response): Promise<any> {
 
         res.cookie('refreshToken', refreshToken, {
           httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000
+          maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
         return res.status(200).json({
@@ -96,8 +96,8 @@ async function login (req: typeof Request, res: typeof Response): Promise<any> {
           accessToken,
           message: 'Selamat Datang',
           user: {
-            id: req.id,
-            username: req.username
+            id: user.id,
+            username: user.username
           }
         })
       }
