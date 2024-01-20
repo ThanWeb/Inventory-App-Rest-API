@@ -6,6 +6,21 @@ const { User } = require('../models/index')
 async function register (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
     const { username, password }: { username: string, password: string } = req.body
+
+    if (username.length < 5) {
+      return res.status(400).json({
+        error: true,
+        message: 'Nama Akun Minimal 5 Karakter'
+      })
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        error: true,
+        message: 'Kata Sandi Minimal 8 Karakter'
+      })
+    }
+
     const isExisting = await findUserByUsername(username)
 
     if (isExisting !== null) {
@@ -34,6 +49,20 @@ async function register (req: typeof Request, res: typeof Response): Promise<typ
 async function login (req: typeof Request, res: typeof Response): Promise<any> {
   let refreshToken = req?.cookies?.refreshToken
   const { username, password }: { username: string, password: string } = req.body
+
+  if (username.length < 5) {
+    return res.status(400).json({
+      error: true,
+      message: 'Nama Akun Minimal 5 Karakter'
+    })
+  }
+
+  if (password.length < 8) {
+    return res.status(400).json({
+      error: true,
+      message: 'Kata Sandi Minimal 8 Karakter'
+    })
+  }
 
   try {
     const user = await User.findOne({
