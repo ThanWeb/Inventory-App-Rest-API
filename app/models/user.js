@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
-    refreshToken: { type: DataTypes.STRING, allowNull: false }
+    refreshToken: { type: DataTypes.STRING, allowNull: true }
   }, {
     sequelize,
     modelName: 'User',
