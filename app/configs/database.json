@@ -15,7 +15,7 @@
     "dialect": "postgres"
   },
   "production": {
-    "url": "postgresql://postgres:lfp6rmfC4dvrFCny4eI9@containers-us-west-27.railway.app:5869/railway",
+    "url": "postgresql://postgres:13F*c6B4f6CB1e2d-Ede-EE13b21geG*@monorail.proxy.rlwy.net:58824/railway",
     "username": "postgres",
     "password": "lfp6rmfC4dvrFCny4eI9",
     "database": "railway",
