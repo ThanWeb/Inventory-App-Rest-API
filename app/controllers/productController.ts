@@ -11,22 +11,22 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
     if (isExist !== null) {
       return res.status(400).json({
         error: true,
-        message: 'Product With Same Name Already Exist'
+        message: 'Nama Produk Duplikat'
       })
     }
 
-    const product = await Product.create({ userId: req.id, name, capitalPrice, sellPrice, stock, unit, isDeleted: false })
+    const product = await Product.create({ userId: req.id, name: name.toLowerCase(), capitalPrice, sellPrice, stock, unit: unit.toLowerCase(), isDeleted: false })
 
     return res.status(201).json({
       error: false,
-      message: 'Product Added',
+      message: 'Produk Berhasil Ditambahkan',
       product
     })
   } catch (error) {
     console.error(error)
     return res.status(500).json({
       error: true,
-      message: 'Server Error'
+      message: 'Kesalahan Pada Server'
     })
   }
 }
@@ -48,7 +48,7 @@ async function getAllProduct (req: typeof Request, res: typeof Response): Promis
     console.error(error)
     return res.status(500).json({
       error: true,
-      message: 'Server Error'
+      message: 'Kesalahan Pada Server'
     })
   }
 }
@@ -64,7 +64,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
     if (isExist === null) {
       return res.status(404).json({
         error: true,
-        message: 'Product Not Found'
+        message: 'Produk Tidak Ditemukan'
       })
     }
 
@@ -72,22 +72,22 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       if (sameName.id !== id) {
         return res.status(400).json({
           error: true,
-          message: 'Product With Same Name Already Exist'
+          message: 'Nama Produk Duplikat'
         })
       }
     }
 
-    await Product.update({ name, capitalPrice, sellPrice, stock, unit }, { where: { id, userId: req.id } })
+    await Product.update({ name: name.toLowerCase(), capitalPrice, sellPrice, stock, unit: unit.toLowerCase() }, { where: { id, userId: req.id } })
 
     return res.status(200).json({
       error: false,
-      message: 'Product Updated'
+      message: 'Produk Berhasil Diubah'
     })
   } catch (error) {
     console.error(error)
     return res.status(500).json({
       error: true,
-      message: 'Server Error'
+      message: 'Kesalahan Pada Server'
     })
   }
 }
@@ -102,7 +102,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
     if (isExist === null || isExist.isDeleted === true) {
       return res.status(404).json({
         error: true,
-        message: 'Product Not Found'
+        message: 'Produk Tidak Ditemukan'
       })
     }
 
@@ -110,7 +110,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
 
     return res.status(200).json({
       error: false,
-      message: 'Product Deleted'
+      message: 'Produk Berhasil Dihapus'
     })
   } catch (error) {
     console.error(error)
@@ -123,7 +123,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
 
 async function checkProductExistByName (name: string, userId: number): Promise<Record<string, any> | null> {
   const product = await Product.findOne({
-    where: { name, isDeleted: false, userId }
+    where: { name: name.toLowerCase(), isDeleted: false, userId }
   })
 
   return product
