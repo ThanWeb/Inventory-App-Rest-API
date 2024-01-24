@@ -1,7 +1,10 @@
 const express = require('express')
 const { Request, Response, NextFunction } = require('express')
+const bodyParser = require('body-parser')
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const { register, login, verifyAccessToken, logout } = require('../controllers/userController')
-const { addProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
+const { addProduct, addMultipleProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
 const verifyToken = require('../middlewares/verifyToken')
 
 const router = express.Router()
@@ -19,6 +22,7 @@ router.get('/verify', verifyToken, verifyAccessToken)
 router.delete('/logout', logout)
 
 router.post('/product', verifyToken, addProduct)
+router.post('/product/multiple', verifyToken, urlencodedParser, addMultipleProduct)
 router.get('/product', verifyToken, getAllProduct)
 router.put('/product', verifyToken, updateProduct)
 router.put('/product/delete', verifyToken, deleteProduct)

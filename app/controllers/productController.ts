@@ -15,12 +15,59 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
       })
     }
 
-    const product = await Product.create({ userId: req.id, name: name.toLowerCase(), capitalPrice, sellPrice, stock, unit: unit.toLowerCase(), isDeleted: false })
+    const product = await Product.create({
+      userId: req.id,
+      name: name.toLowerCase(),
+      capitalPrice,
+      sellPrice,
+      stock,
+      unit: unit.toLowerCase(),
+      isDeleted: false
+    })
 
     return res.status(201).json({
       error: false,
       message: 'Produk Berhasil Ditambahkan',
       product
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      error: true,
+      message: 'Kesalahan Pada Server'
+    })
+  }
+}
+
+async function addMultipleProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
+  try {
+    const userId: number = req.id
+    const products: Array<{ name: string, capitalPrice: string, sellPrice: string, stock: string, unit: string }> = req.body.products
+
+    for (let index = 0; index < products.length; index++) {
+      const isExist = await checkProductExistByName(products[index].name, userId)
+
+      if (isExist !== null) {
+        return res.status(400).json({
+          error: true,
+          message: 'Nama Produk Duplikat'
+        })
+      }
+
+      await Product.create({
+        userId: req.id,
+        name: products[index].name.toLowerCase(),
+        capitalPrice: parseInt(products[index].capitalPrice),
+        sellPrice: parseInt(products[index].sellPrice),
+        stock: parseInt(products[index].stock),
+        unit: products[index].unit.toLowerCase(),
+        isDeleted: false
+      })
+    }
+
+    return res.status(201).json({
+      error: false,
+      message: 'Semua Produk Berhasil Ditambahkan'
     })
   } catch (error) {
     console.error(error)
@@ -138,4 +185,4 @@ async function checkProductExistById (id: number, userId: number): Promise<Recor
 }
 
 export {}
-module.exports = { addProduct, getAllProduct, updateProduct, deleteProduct }
+module.exports = { addProduct, addMultipleProduct, getAllProduct, updateProduct, deleteProduct }
