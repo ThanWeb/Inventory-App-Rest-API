@@ -21,7 +21,7 @@ async function registerAdmin (req: typeof Request, res: typeof Response): Promis
       })
     }
 
-    const isExisting = await findUserByUsername(username, true)
+    const isExisting = await findUserByUsername(username)
 
     if (isExisting !== null) {
       return res.status(400).json({
@@ -66,10 +66,17 @@ async function loginAdmin (req: typeof Request, res: typeof Response): Promise<a
 
   try {
     const user = await User.findOne({
-      where: { username, role: 'admin' }
+      where: { username }
     })
 
     if (user !== null) {
+      if (user.role !== 'admin') {
+        return res.status(401).json({
+          error: true,
+          message: 'Akun Bukan Admin'
+        })
+      }
+
       const match = await bcrypt.compare(password, user.password)
 
       if (match === false) {
@@ -163,9 +170,9 @@ async function verifyAccessToken (req: typeof Request, res: typeof Response): Pr
   })
 }
 
-async function findUserByUsername (username: string, isAdmin: boolean): Promise<boolean | Record<string, any>> {
+async function findUserByUsername (username: string): Promise<boolean | Record<string, any>> {
   const user = await User.findOne({
-    where: { username, isAdmin }
+    where: { username }
   })
 
   return user
