@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
 
-async function register (req: typeof Request, res: typeof Response): Promise<typeof Response> {
+async function registerAdmin (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
     const { username, password }: { username: string, password: string } = req.body
 
@@ -21,7 +21,7 @@ async function register (req: typeof Request, res: typeof Response): Promise<typ
       })
     }
 
-    const isExisting = await findUserByUsername(username)
+    const isExisting = await findUserByUsername(username, true)
 
     if (isExisting !== null) {
       return res.status(400).json({
@@ -31,7 +31,7 @@ async function register (req: typeof Request, res: typeof Response): Promise<typ
     }
 
     const hashPassword = bcrypt.hashSync(password, 10)
-    await User.create({ username, password: hashPassword })
+    await User.create({ username, password: hashPassword, role: 'admin' })
 
     return res.status(201).json({
       error: false,
@@ -46,7 +46,7 @@ async function register (req: typeof Request, res: typeof Response): Promise<typ
   }
 }
 
-async function login (req: typeof Request, res: typeof Response): Promise<any> {
+async function loginAdmin (req: typeof Request, res: typeof Response): Promise<any> {
   let refreshToken = req?.cookies?.refreshToken
   const { username, password }: { username: string, password: string } = req.body
 
@@ -66,7 +66,7 @@ async function login (req: typeof Request, res: typeof Response): Promise<any> {
 
   try {
     const user = await User.findOne({
-      where: { username }
+      where: { username, role: 'admin' }
     })
 
     if (user !== null) {
@@ -163,9 +163,9 @@ async function verifyAccessToken (req: typeof Request, res: typeof Response): Pr
   })
 }
 
-async function findUserByUsername (username: string): Promise<boolean | Record<string, any>> {
+async function findUserByUsername (username: string, isAdmin: boolean): Promise<boolean | Record<string, any>> {
   const user = await User.findOne({
-    where: { username }
+    where: { username, isAdmin }
   })
 
   return user
@@ -174,8 +174,8 @@ async function findUserByUsername (username: string): Promise<boolean | Record<s
 export {}
 
 module.exports = {
-  register,
-  login,
-  verifyAccessToken,
-  logout
+  registerAdmin,
+  loginAdmin,
+  logout,
+  verifyAccessToken
 }
