@@ -9,7 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      createdBy: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      lastUpdatedBy: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

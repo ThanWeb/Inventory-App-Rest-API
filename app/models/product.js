@@ -14,13 +14,38 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    userId: { type: DataTypes.INTEGER, allowNull: false },
-    name: { type: DataTypes.STRING, allowNull: false },
-    capitalPrice: { type: DataTypes.INTEGER, allowNull: false },
-    sellPrice: { type: DataTypes.INTEGER, allowNull: false },
-    stock: { type: DataTypes.INTEGER, allowNull: false },
-    unit: { type: DataTypes.STRING, allowNull: false },
-    isDeleted: { type: DataTypes.BOOLEAN, allowNull: false },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    lastUpdatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    name: { 
+      type: DataTypes.STRING, 
+      allowNull: false 
+    },
+    capitalPrice: { 
+      type: DataTypes.INTEGER, 
+      allowNull: false 
+    },
+    sellPrice: { 
+      type: DataTypes.INTEGER,
+      allowNull: false 
+    },
+    stock: { 
+      type: DataTypes.INTEGER,
+      allowNull: false 
+    },
+    unit: { 
+      type: DataTypes.STRING,
+      allowNull: false 
+    },
+    isDeleted: { 
+      type: DataTypes.BOOLEAN,
+      allowNull: false 
+    },
   }, {
     sequelize,
     modelName: 'Product',
