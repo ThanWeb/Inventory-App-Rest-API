@@ -134,7 +134,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       unit: unit.toLowerCase()
     }, {
       where: {
-        id, userId: req.id
+        id
       }
     })
 
