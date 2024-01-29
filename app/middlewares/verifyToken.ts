@@ -1,10 +1,22 @@
 const jwt = require('jsonwebtoken')
 const { Request, Response, NextFunction } = require('express')
+const { User } = require('../models/index')
 
-const verifyToken = (req: typeof Request, res: typeof Response, next: typeof NextFunction): any | typeof Response => {
+const verifyToken = async (req: typeof Request, res: typeof Response, next: typeof NextFunction): Promise<any> => {
   const refreshToken = req?.cookies?.refreshToken
 
   if (refreshToken === undefined) {
+    return res.status(401).json({
+      error: true,
+      message: 'Silahkan Login'
+    })
+  }
+
+  const user = await User.findAll({
+    where: { refreshToken }
+  })
+
+  if (user.length === 0) {
     return res.status(401).json({
       error: true,
       message: 'Silahkan Login'
