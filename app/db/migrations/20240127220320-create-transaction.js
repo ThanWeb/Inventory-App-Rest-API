@@ -13,13 +13,13 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER
       },
-      cart: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       total: {
         allowNull: false,
         type: Sequelize.INTEGER
+      },
+      isUnpaid: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

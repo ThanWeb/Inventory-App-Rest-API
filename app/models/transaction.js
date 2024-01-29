@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    cart: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     total: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    isUnpaid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Transaction',
