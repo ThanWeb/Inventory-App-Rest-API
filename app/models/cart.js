@@ -18,10 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    transcationId: {
+    transactionId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    total: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Cart',

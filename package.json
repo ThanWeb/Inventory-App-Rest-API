@@ -13,6 +13,9 @@
     "db:seed": "sequelize db:seed:all",
     "db:init": "npm run db:create && npm run db:migrate && npm run db:seed",
     "db:remake": "npm run db:drop && npm run db:init",
+    "db:migrate:cart": "sequelize db:migrate --to 20240128215835-create-cart.js",
+    "db:rollback:cart": "sequelize db:migrate:undo:all --to 20240128215835-create-cart.js",
+    "db:recreate:cart": "npm run db:rollback:cart && npm run db:migrate:cart",
     "lint": "eslint ./"
   },
   "author": "",
