@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const { registerAdmin, loginAdmin, logout, verifyAccessToken } = require('../controllers/userController')
 const { addProduct, addMultipleProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
+const { createTransactionByAdmin } = require('../controllers/transactionController')
 const verifyToken = require('../middlewares/verifyToken')
 const verifyAdmin = require('../middlewares/verifyAdmin')
 
@@ -28,6 +29,8 @@ router.post('/product/multiple', verifyToken, verifyAdmin, urlencodedParser, add
 router.get('/product', verifyToken, getAllProduct)
 router.put('/product', verifyToken, verifyAdmin, updateProduct)
 router.put('/product/delete', verifyToken, verifyAdmin, deleteProduct)
+
+router.post('/admin/transaction', verifyToken, verifyAdmin, urlencodedParser, createTransactionByAdmin)
 
 export {}
 module.exports = router
