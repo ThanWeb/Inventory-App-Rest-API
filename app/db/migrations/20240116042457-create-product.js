@@ -38,6 +38,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       isDeleted: {
         allowNull: false,
         type: Sequelize.BOOLEAN
