@@ -1,5 +1,6 @@
 const { Request, Response } = require('express')
 const { Product } = require('../models')
+const deleteFile = require('../services/deleteFile')
 
 async function addProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
@@ -183,6 +184,7 @@ async function deleteProduct (req: typeof Request, res: typeof Response): Promis
       })
     }
 
+    await deleteFile(isExist.imageUrl)
     await Product.update({ lastUpdatedBy: userId, isDeleted: true }, { where: { id } })
 
     return res.status(200).json({
