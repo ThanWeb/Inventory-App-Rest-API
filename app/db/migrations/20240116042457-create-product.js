@@ -19,8 +19,7 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
+        type: Sequelize.STRING
       },
       capitalPrice: {
         allowNull: false,
@@ -40,7 +39,7 @@ module.exports = {
       },
       imageUrl: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       isDeleted: {
         allowNull: false,
