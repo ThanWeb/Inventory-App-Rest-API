@@ -55,7 +55,7 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
   try {
     const transcations = await Transaction.findAll({
       attributes: {
-        exclude: ['id', 'updatedAt']
+        exclude: ['id', 'updatedAt', 'ownedBy']
       },
       order: [
         ['createdAt', 'DESC']
@@ -63,7 +63,7 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
       include: [
         {
           model: User,
-          as: 'user',
+          as: 'owner',
           attributes: ['username', 'role']
         }
       ]
@@ -81,9 +81,69 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
     })
   }
 }
+
+async function getTransactionDetailById (req: typeof Request, res: typeof Response): Promise<typeof Response> {
+  try {
+    const id = req.params.id
+
+    const carts = await Cart.findAll({
+      where: {
+        transactionId: id
+      },
+      attributes: {
+        exclude: ['id', 'updatedAt', 'transactionId', 'productId']
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ],
+      include: [
+        {
+          model: Product,
+          as: 'product',
+          attributes: ['name', 'sellPrice', 'unit']
+        }
+      ]
+    })
+
+    const transaction = await Transaction.findOne({
+      where: {
+        id
+      },
+      attributes: {
+        exclude: ['id', 'updatedAt', 'ownedBy']
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ],
+      include: [
+        {
+          model: User,
+          as: 'owner',
+          attributes: ['username', 'role']
+        }
+      ]
+    })
+
+    return res.status(200).json({
+      error: false,
+      transaction: {
+        ...transaction.dataValues,
+        carts
+      }
+    })
+  } catch (error: any) {
+    console.error(error)
+    return res.status(500).json({
+      error: true,
+      message: 'Kesalahan Pada Server'
+    })
+  }
+}
+
 export {}
 
 module.exports = {
   createTransactionByAdmin,
-  getTransactions
+  getTransactions,
+  getTransactionDetailById
 }

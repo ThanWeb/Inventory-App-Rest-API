@@ -33,7 +33,7 @@ module.exports = (sequelize: typeof Sequelize, DataTypes: any): any => {
 
   Transaction.associate = function (models) {
     Transaction.belongsTo(models.User, {
-      as: 'user',
+      as: 'owner',
       foreignKey: 'ownedBy'
     })
   }

@@ -20,7 +20,8 @@ const {
 
 const {
   createTransactionByAdmin,
-  getTransactions
+  getTransactions,
+  getTransactionDetailById
 } = require('../controllers/transactionController')
 
 const verifyToken = require('../middlewares/verifyToken')
@@ -49,6 +50,7 @@ router.put('/product/delete', verifyToken, verifyAdmin, deleteProduct)
 
 router.post('/admin/transaction', verifyToken, verifyAdmin, urlencodedParser, createTransactionByAdmin)
 router.get('/admin/transaction', verifyToken, verifyAdmin, getTransactions)
+router.get('/admin/transaction/:id', verifyToken, verifyAdmin, getTransactionDetailById)
 
 export {}
 module.exports = router

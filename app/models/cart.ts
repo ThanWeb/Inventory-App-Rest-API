@@ -31,6 +31,13 @@ module.exports = (sequelize: typeof Sequelize, DataTypes: any): any => {
     modelName: 'Cart'
   })
 
+  Cart.associate = function (models) {
+    Cart.belongsTo(models.Product, {
+      as: 'product',
+      foreignKey: 'productId'
+    })
+  }
+
   return Cart
 }
 
