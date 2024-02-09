@@ -26,21 +26,22 @@ async function createTransactionByAdmin (req: typeof Request, res: typeof Respon
       await selectedItem.save()
     }
 
-    const transaction = await Transaction.create({
+    const { id } = await Transaction.create({
       ownedBy: req.id,
       total,
       isUnpaid: true
     })
 
     products.forEach(product => {
-      product.transactionId = transaction.id
+      product.transactionId = id
     })
 
     await Cart.bulkCreate(products, { fields: ['productId', 'transactionId', 'total'] })
 
     return res.status(201).json({
       error: false,
-      message: 'Transaksi Berhasil'
+      message: 'Transaksi Berhasil',
+      transactionId: id
     })
   } catch (error) {
     console.error(error)
