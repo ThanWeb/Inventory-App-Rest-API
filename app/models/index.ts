@@ -6,10 +6,10 @@ const Sequelize = require('sequelize')
 const nodeProcess = require('process')
 const basename = path.basename(__filename)
 const env = nodeProcess.env.NODE_ENV !== undefined ? nodeProcess.env.NODE_ENV : 'development'
-const config = require(path.join(__dirname, '/../configs/database.json'))[env]
-const db = {}
+const config = require(`${path.join(__dirname, '/../configs/database.json')}`)[env]
+const db: Record<string, any> = {}
 
-let sequelize
+let sequelize: any
 if (env === 'production') {
   sequelize = new Sequelize(config.url)
 } else {
@@ -18,16 +18,16 @@ if (env === 'production') {
 
 fs
   .readdirSync(__dirname)
-  .filter((file) => {
+  .filter((file: any) => {
     return (
       file.indexOf('.') !== 0 &&
         file !== basename &&
-        file.slice(-3) === '.js' &&
-        file.indexOf('.test.js') === -1
+        file.slice(-3) === '.ts' &&
+        file.indexOf('.test.ts') === -1
     )
   })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+  .forEach((file: any) => {
+    const model = require(`${path.join(__dirname, file)}`)(sequelize, Sequelize.DataTypes)
     db[model.name] = model
   })
 
@@ -39,5 +39,7 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize
+
+export {}
 
 module.exports = db
