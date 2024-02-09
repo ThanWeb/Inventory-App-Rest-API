@@ -1,5 +1,5 @@
 const { Request, Response } = require('express')
-const { Product, Cart, Transaction } = require('../models/index')
+const { Product, Cart, Transaction, User } = require('../models/index')
 
 async function createTransactionByAdmin (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
@@ -51,8 +51,39 @@ async function createTransactionByAdmin (req: typeof Request, res: typeof Respon
   }
 }
 
+async function getTransactions (req: typeof Request, res: typeof Response): Promise<typeof Response> {
+  try {
+    const transcations = await Transaction.findAll({
+      attributes: {
+        exclude: ['id', 'updatedAt']
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['username', 'role']
+        }
+      ]
+    })
+
+    return res.status(200).json({
+      error: false,
+      transcations
+    })
+  } catch (error: any) {
+    console.error(error)
+    return res.status(500).json({
+      error: true,
+      message: 'Kesalahan Pada Server'
+    })
+  }
+}
 export {}
 
 module.exports = {
-  createTransactionByAdmin
+  createTransactionByAdmin,
+  getTransactions
 }
