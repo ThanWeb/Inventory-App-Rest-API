@@ -1,11 +1,25 @@
 const express = require('express')
-const { Request, Response, NextFunction } = require('express')
 const bodyParser = require('body-parser')
-
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const { registerAdmin, loginAdmin, logout, verifyAccessToken } = require('../controllers/userController')
-const { addProduct, addMultipleProduct, getAllProduct, updateProduct, deleteProduct } = require('../controllers/productController')
+const { Request, Response, NextFunction } = require('express')
+
+const {
+  registerAdmin,
+  loginAdmin,
+  logout,
+  verifyAccessToken
+} = require('../controllers/userController')
+
+const {
+  addProduct,
+  addMultipleProduct,
+  getAllProduct,
+  updateProduct,
+  deleteProduct
+} = require('../controllers/productController')
+
 const { createTransactionByAdmin } = require('../controllers/transactionController')
+
 const verifyToken = require('../middlewares/verifyToken')
 const verifyAdmin = require('../middlewares/verifyAdmin')
 

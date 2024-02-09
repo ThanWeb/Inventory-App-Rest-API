@@ -4,7 +4,7 @@ const { Product } = require('../models')
 async function addProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
     const userId: number = req.id
-    const { name, capitalPrice, sellPrice, stock, unit }: { name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string } = req.body
+    const { name, capitalPrice, sellPrice, stock, unit, imageUrl }: { name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string, imageUrl: string } = req.body
 
     const isExist = await checkProductExistByName(name)
 
@@ -23,6 +23,7 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
       sellPrice,
       stock,
       unit: unit.toLowerCase(),
+      imageUrl,
       isDeleted: false
     })
 
@@ -32,6 +33,23 @@ async function addProduct (req: typeof Request, res: typeof Response): Promise<t
       product
     })
   } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      error: true,
+      message: 'Kesalahan Pada Server'
+    })
+  }
+}
+
+async function uploadSingleImageProduct (req: any, res: typeof Response): Promise<typeof Response> {
+  try {
+    const finalImageURL = req.protocol + '://' + req.get('host') + '/uploads/' + req.file.filename
+
+    return res.status(200).json({
+      error: false,
+      image: finalImageURL
+    })
+  } catch (error: any) {
     console.error(error)
     return res.status(500).json({
       error: true,
@@ -197,4 +215,11 @@ async function checkProductExistById (id: number): Promise<Record<string, any> |
 }
 
 export {}
-module.exports = { addProduct, addMultipleProduct, getAllProduct, updateProduct, deleteProduct }
+module.exports = {
+  addProduct,
+  uploadSingleImageProduct,
+  addMultipleProduct,
+  getAllProduct,
+  updateProduct,
+  deleteProduct
+}
