@@ -1,5 +1,9 @@
 const { Request, Response } = require('express')
+const { Op } = require('sequelize')
 const { Product, Cart, Transaction, User } = require('../models/index')
+
+const TODAY_START = new Date().setHours(0, 0, 0, 0)
+const NOW = new Date()
 
 async function createTransactionByAdmin (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
@@ -54,9 +58,9 @@ async function createTransactionByAdmin (req: typeof Request, res: typeof Respon
 
 async function getTransactions (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
-    const transcations = await Transaction.findAll({
+    const transactions = await Transaction.findAll({
       attributes: {
-        exclude: ['id', 'updatedAt', 'ownedBy']
+        exclude: ['updatedAt', 'ownedBy']
       },
       order: [
         ['createdAt', 'DESC']
@@ -67,12 +71,18 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
           as: 'owner',
           attributes: ['username', 'role']
         }
-      ]
+      ],
+      where: {
+        created: {
+          [Op.gt]: TODAY_START,
+          [Op.lt]: NOW
+        }
+      }
     })
 
     return res.status(200).json({
       error: false,
-      transcations
+      transactions
     })
   } catch (error: any) {
     console.error(error)
@@ -111,7 +121,7 @@ async function getTransactionDetailById (req: typeof Request, res: typeof Respon
         id
       },
       attributes: {
-        exclude: ['id', 'updatedAt', 'ownedBy']
+        exclude: ['updatedAt', 'ownedBy']
       },
       order: [
         ['createdAt', 'DESC']
