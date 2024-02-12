@@ -2,9 +2,6 @@ const { Request, Response } = require('express')
 const { Op } = require('sequelize')
 const { Product, Cart, Transaction, User } = require('../models/index')
 
-const TODAY_START = new Date().setHours(0, 0, 0, 0)
-const NOW = new Date()
-
 async function createTransactionByAdmin (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
     let total = 0
@@ -58,6 +55,11 @@ async function createTransactionByAdmin (req: typeof Request, res: typeof Respon
 
 async function getTransactions (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
+    const queryDate: string = req.query.date ?? ''
+    const FROM_DATE = new Date(queryDate).setHours(0, 0, 0, 0)
+    const TO_DATE = new Date(queryDate)
+    TO_DATE.setDate(TO_DATE.getDate() + 1)
+
     const transactions = await Transaction.findAll({
       attributes: {
         exclude: ['updatedAt', 'ownedBy']
@@ -73,9 +75,9 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
         }
       ],
       where: {
-        created: {
-          [Op.gt]: TODAY_START,
-          [Op.lt]: NOW
+        createdAt: {
+          [Op.gt]: FROM_DATE,
+          [Op.lt]: TO_DATE
         }
       }
     })
