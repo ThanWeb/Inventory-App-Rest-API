@@ -59,6 +59,7 @@ async function getTransactions (req: typeof Request, res: typeof Response): Prom
     const FROM_DATE = new Date(queryDate).setHours(0, 0, 0, 0)
     const TO_DATE = new Date(queryDate)
     TO_DATE.setDate(TO_DATE.getDate() + 1)
+    TO_DATE.setHours(0, 0, 0, 0)
 
     const transactions = await Transaction.findAll({
       attributes: {
