@@ -148,7 +148,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       await deleteFile(isExist.imageUrl)
     }
 
-    await Product.update({
+    const product = await Product.update({
       lastUpdatedBy: userId,
       name: name.toLowerCase(),
       capitalPrice,
@@ -159,12 +159,14 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
     }, {
       where: {
         id
-      }
+      },
+      returning: true
     })
 
     return res.status(200).json({
       error: false,
-      message: 'Produk Berhasil Diubah'
+      message: 'Produk Berhasil Diubah',
+      product: product[1][0]
     })
   } catch (error) {
     console.error(error)
