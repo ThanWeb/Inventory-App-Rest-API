@@ -123,7 +123,7 @@ async function getAllProduct (req: typeof Request, res: typeof Response): Promis
 async function updateProduct (req: typeof Request, res: typeof Response): Promise<typeof Response> {
   try {
     const userId: number = req.id
-    const { id, name, capitalPrice, sellPrice, stock, unit }: { id: number, name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string } = req.body
+    const { id, name, capitalPrice, sellPrice, stock, unit, imageUrl }: { id: number, name: string, capitalPrice: number, sellPrice: number, stock: number, unit: string, imageUrl: string } = req.body
 
     const isExist = await checkProductExistById(id)
     const sameName = await checkProductExistByName(name)
@@ -144,13 +144,18 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       }
     }
 
+    if (imageUrl !== '' && imageUrl !== isExist.imageUrl) {
+      await deleteFile(isExist.imageUrl)
+    }
+
     await Product.update({
       lastUpdatedBy: userId,
       name: name.toLowerCase(),
       capitalPrice,
       sellPrice,
       stock,
-      unit: unit.toLowerCase()
+      unit: unit.toLowerCase(),
+      imageUrl
     }, {
       where: {
         id
