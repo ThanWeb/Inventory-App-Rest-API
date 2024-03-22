@@ -223,7 +223,6 @@ async function checkProductExistById (id: number): Promise<Record<string, any> |
   return product
 }
 
-export {}
 module.exports = {
   addProduct,
   uploadSingleImageProduct,

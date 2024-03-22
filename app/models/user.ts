@@ -37,5 +37,3 @@ module.exports = (sequelize: typeof Sequelize, DataTypes: any): typeof Model => 
 
   return User
 }
-
-export {}

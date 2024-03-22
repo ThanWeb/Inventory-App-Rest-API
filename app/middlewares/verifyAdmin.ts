@@ -16,6 +16,4 @@ const verifyAdmin = async (req: typeof Request, res: typeof Response, next: type
   next()
 }
 
-export {}
-
 module.exports = verifyAdmin

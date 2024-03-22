@@ -52,5 +52,4 @@ router.post('/admin/transaction', verifyToken, verifyAdmin, urlencodedParser, cr
 router.get('/admin/transaction', verifyToken, verifyAdmin, getTransactions)
 router.get('/admin/transaction/:id', verifyToken, verifyAdmin, getTransactionDetailById)
 
-export {}
 module.exports = router

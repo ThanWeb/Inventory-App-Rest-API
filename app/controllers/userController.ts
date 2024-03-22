@@ -178,8 +178,6 @@ async function findUserByUsername (username: string): Promise<boolean | Record<s
   return user
 }
 
-export {}
-
 module.exports = {
   registerAdmin,
   loginAdmin,

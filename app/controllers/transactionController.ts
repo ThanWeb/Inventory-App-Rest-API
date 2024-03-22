@@ -154,8 +154,6 @@ async function getTransactionDetailById (req: typeof Request, res: typeof Respon
   }
 }
 
-export {}
-
 module.exports = {
   createTransactionByAdmin,
   getTransactions,

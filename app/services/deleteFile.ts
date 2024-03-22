@@ -12,5 +12,4 @@ async function deleteFile (filePath: string): Promise<void> {
   }
 }
 
-export {}
 module.exports = deleteFile

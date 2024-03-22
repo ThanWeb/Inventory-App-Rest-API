@@ -49,6 +49,4 @@ const verifyToken = async (req: typeof Request, res: typeof Response, next: type
   })
 }
 
-export {}
-
 module.exports = verifyToken
