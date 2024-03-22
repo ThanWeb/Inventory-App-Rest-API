@@ -144,7 +144,7 @@ async function updateProduct (req: typeof Request, res: typeof Response): Promis
       }
     }
 
-    if (imageUrl !== '' && imageUrl !== isExist.imageUrl) {
+    if (imageUrl !== '' && isExist.imageUrl !== null && imageUrl !== isExist.imageUrl) {
       await deleteFile(isExist.imageUrl)
     }
 

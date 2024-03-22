@@ -22,7 +22,7 @@
     "db:migrate:cart": "sequelize db:migrate --to 20240128215835-create-cart.js",
     "db:rollback:cart": "sequelize db:migrate:undo:all --to 20240128215835-create-cart.js",
     "db:recreate:cart": "npm run db:rollback:cart && npm run db:migrate:cart",
-    "lint": "eslint ./"
+    "lint": "eslint"
   },
   "author": "",
   "license": "ISC",
