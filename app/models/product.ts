@@ -57,5 +57,3 @@ module.exports = (sequelize: typeof Sequelize, DataTypes: any): any => {
 
   return Product
 }
-
-export {}

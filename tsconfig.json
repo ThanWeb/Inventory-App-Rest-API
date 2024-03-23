@@ -5,6 +5,8 @@
     "strict": true,
     "lib": ["esnext"],
     "esModuleInterop": true,
+    "moduleDetection": "force",
+    "moduleResolution": "Node",
     "target": "ES2021"
   }
 }
