@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('checkouts', function (Blueprint $table) {
@@ -17,12 +14,11 @@ return new class extends Migration
             $table->integer('total')->nullable(false);
             $table->boolean('unpaid')->nullable(false)->default(true);
             $table->timestamps();
+
+            $table->foreign('owned_by')->on('users')->references('id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('checkouts');

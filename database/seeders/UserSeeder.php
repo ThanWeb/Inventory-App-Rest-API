@@ -9,9 +9,6 @@ use Ramsey\Uuid\Rfc4122\UuidV4;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         User::create([
@@ -21,5 +18,4 @@ class UserSeeder extends Seeder
             'is_admin' => true
         ]);
     }
-
 }

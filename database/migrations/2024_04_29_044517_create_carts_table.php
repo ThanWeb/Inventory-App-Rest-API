@@ -5,9 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('carts', function (Blueprint $table) {
@@ -16,12 +13,12 @@ return new class extends Migration
             $table->uuid('checkout_id')->nullable(false);
             $table->integer('total')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('product_id')->on('products')->references('id');
+            $table->foreign('checkout_id')->on('checkouts')->references('id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('carts');
