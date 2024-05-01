@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('owned_by')->nullable(false);
-            $table->uuid('last_updated_by')->nullable(false);
             $table->string('name', 255)->nullable(false)->unique('products_name_unique');
             $table->integer('capital_price')->nullable(false);
             $table->integer('sell_price')->nullable(false);
@@ -25,7 +24,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('owned_by')->on('users')->references('id');
-            $table->foreign('last_updated_by')->on('users')->references('id');
         });
     }
 

@@ -20,7 +20,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Hoodie KKK',
                 'capital_price' => 200000,
                 'sell_price' => 300000,
@@ -31,7 +30,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Gigi Minotaur',
                 'capital_price' => 5000000,
                 'sell_price' => 10000000,
@@ -42,7 +40,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Bunga Bankai',
                 'capital_price' => 200000,
                 'sell_price' => 350000,
@@ -53,7 +50,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Dragon ball',
                 'capital_price' => 1000000,
                 'sell_price' => 3000000,
@@ -64,7 +60,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Death Note',
                 'capital_price' => 10000000,
                 'sell_price' => 20000000,
@@ -75,7 +70,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Pedang Kunasagi',
                 'capital_price' => 150000,
                 'sell_price' => 200000,
@@ -86,7 +80,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Buku Tulis Kiky 38',
                 'capital_price' => 3000,
                 'sell_price' => 4000,
@@ -97,7 +90,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => UuidV4::uuid4()->toString(),
                 'owned_by' => $user->id,
-                'last_updated_by' => $user->id,
                 'name' => 'Sky Guardian Helmet',
                 'capital_price' => 3500,
                 'sell_price' => 5000,
