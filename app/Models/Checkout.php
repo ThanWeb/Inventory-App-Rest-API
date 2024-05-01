@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Model
+class Checkout extends Model
 {
-    protected $table = 'users';
+    protected $table = 'checkouts';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $timestamps = true;
 
     protected $fillable = [
-        'username',
-        'password',
-        'is_admin',
-        'refresh_token'
+        'owned_by',
+        'total',
+        'is_unpaid'
     ];
 
-    public function products():HasMany
+    public function carts():HasMany
     {
-        return $this->hasMany(Product::class, 'owned_by', 'id');
+        return $this->hasMany(Cart::class, 'checkout_id', 'id');
     }
 }

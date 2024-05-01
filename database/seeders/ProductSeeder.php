@@ -9,9 +9,6 @@ use Ramsey\Uuid\Rfc4122\UuidV4;
 
 class ProductSeeder extends Seeder
     {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $user = User::query()->first();
