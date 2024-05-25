@@ -83,11 +83,20 @@ class AuthController extends Controller
         ]);
     }
 
+    public function verify()
+    {
+        return response()->json([
+            'message' => 'Welcome.',
+            'user' => [
+                'name' => 'name'
+            ]
+        ]);
+    }
+
     public function refresh()
     {
         return response()->setStatusCode(200)->cookie(
             'token', Auth::refresh(), 30
         );;
     }
-
 }
